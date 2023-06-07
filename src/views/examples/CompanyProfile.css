@@ -1,46 +1,19 @@
-.company-profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-  }
+.container {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 100vh; */
+  margin-top: 10px;
+  padding-top: 100px;
+  /* background-color: rgb(129, 161, 190); */
+}
+
+.company-container{
+  /* display: flex;
+  justify-content: center; */
+  align-items: center;
+  background-color: black;
+}
   
-  .company-profile {
-    width: 500px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .company-profile-header {
-    padding: 20px;
-    background-color: #f8f8f8;
-  }
-  
-  .company-profile-title {
-    margin: 0;
-    font-size: 24px;
-    color: #333333;
-  }
-  
-  .company-profile-content {
-    padding: 20px;
-  }
-  
-  .company-profile-field {
-    margin-bottom: 20px;
-  }
-  
-  .company-profile-field-title {
-    margin: 0;
-    font-size: 18px;
-    color: #333333;
-  }
-  
-  .company-profile-field-value {
-    margin: 5px 0 0;
-    font-size: 16px;
-    color: #888888;
-  }
   

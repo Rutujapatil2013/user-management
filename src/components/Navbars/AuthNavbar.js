@@ -16,6 +16,7 @@
 
 */
 import { Link } from "react-router-dom";
+import "./AuthNavbar.css";
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -32,6 +33,7 @@ import {
 const AdminNavbar = () => {
   return (
     <>
+    <div className="navbar">
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
         <Container className="px-4">
           <NavbarBrand to="/" tag={Link}>
@@ -100,6 +102,7 @@ const AdminNavbar = () => {
           </UncontrolledCollapse>
         </Container>
       </Navbar>
+      </div>
     </>
   );
 };

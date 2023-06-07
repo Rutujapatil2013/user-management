@@ -1,24 +1,5 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-  
-
 import React from 'react';
+import "./UserProfile.css";
 import {
   MDBCol,
   MDBContainer,
@@ -39,8 +20,8 @@ import {
 
 export default function ProfilePage() {
   return (
-    <section style={{ backgroundColor: '#eee' }}>
-    <div className="container">
+  <div className="container">
+    <section style={{ backgroundColor: 'rgb(129, 161, 190)' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
@@ -114,9 +95,13 @@ export default function ProfilePage() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-      </div>
     </section>
+  </div>
+
   );
 }
+
+
+
 
 
