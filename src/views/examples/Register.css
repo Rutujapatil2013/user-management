@@ -1,0 +1,37 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 120vh;
+}
+
+.register-container .card {
+  width: 80%;
+  border: none;
+}
+
+.register-container .card-body {
+  padding: 2rem;
+}
+
+.register-container .card-body > div {
+  margin-bottom: 1.5rem;
+}
+
+.register-container h4 {
+  margin-bottom: 2rem;
+}
+
+.register-container .text-muted {
+  margin-top: 1rem;
+}
+
+.register-container .text-muted small {
+  font-size: 0.9rem;
+}
+
+.register-container .text-success {
+  font-weight: bold;
+}
+
