@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import './UserManagement.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -16,6 +17,9 @@ const UserManagement = () => {
     password: '',
     role: '',
   });
+  const location = useLocation()
+  const state = location.email ? location.email : "false";
+    console.log(location,"the state is here in the user maanagement------*****************************************")
 
   const handleInputChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });

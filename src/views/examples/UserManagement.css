@@ -85,32 +85,3 @@
     background-color: #4caf50;
     color: white;
   }
-  
-/*   
-  .edit-button,
-  .delete-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    color: #333;
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
-    display: flex;
-    align-items: center;
-  }
-  
-  .add-button svg {
-    margin-right: 0.5rem;
-  }
-  
-  .delete-button {
-    color: red;
-  }
-  
-  .delete-button svg {
-    margin-right: 0.5rem;
-  } */
-  
-  
-  

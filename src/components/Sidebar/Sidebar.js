@@ -16,10 +16,11 @@
 
 */
 /*eslint-disable*/
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import { useLocation } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -56,6 +57,15 @@ var ps;
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
+  const [finalState, setFinalState] = useState(false)
+  
+  const location = useLocation();
+  useEffect(()=>{
+      const state = location.state ? location.state : "false";
+    console.log(state,"the state is here")
+    // await localStorage.setItem('myState',state)
+    setFinalState(state)
+  },[])
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -70,6 +80,20 @@ const Sidebar = (props) => {
   };
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
+    // console.log(window.location.href,"the url of current web")
+    // const getState = localStorage.getItem('myState')
+    const getState = finalState
+    console.log(getState,'------------------------------------------------------')
+   if(getState==="true"){
+    console.log("in the if part, getState is true")
+    console.log(routes.length)
+    routes = routes.filter((item, index) => index < 4);
+   }
+    else if(getState==="false"){
+      console.log("HERE IN THE ELSE PART, getState is false")
+      const includedIndices = [0, 1, 4];
+      routes = includedIndices.map((index) => routes[index]);
+   }
     return routes.map((prop, key) => {
       return (
         <NavItem key={key}>
@@ -84,6 +108,7 @@ const Sidebar = (props) => {
         </NavItem>
       );
     });
+  
   };
 
   const { bgColor, routes, logo } = props;
