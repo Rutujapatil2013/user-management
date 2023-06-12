@@ -1,26 +1,13 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 /*eslint-disable*/
 import { useEffect, useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 
 // reactstrap components
 import {
@@ -60,11 +47,18 @@ const Sidebar = (props) => {
   const [finalState, setFinalState] = useState(false)
   
   const location = useLocation();
+  const navigate=useNavigate();
+
+  const handleLogout=()=>{
+    navigate("auth/login");
+  }
+
   useEffect(()=>{
       const state = location.state ? location.state : "false";
-    console.log(state,"the state is here")
+    // console.log(state,"the state is here")
     // await localStorage.setItem('myState',state)
     setFinalState(state)
+    // console.log('final state', finalState )
   },[])
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -78,22 +72,25 @@ const Sidebar = (props) => {
   const closeCollapse = () => {
     setCollapseOpen(false);
   };
-  // creates the links that appear in the left menu / Sidebar
+
+
   const createLinks = (routes) => {
     // console.log(window.location.href,"the url of current web")
     // const getState = localStorage.getItem('myState')
     const getState = finalState
-    console.log(getState,'------------------------------------------------------')
+    // console.log(getState,'------------------------------------------------------')
+
    if(getState==="true"){
-    console.log("in the if part, getState is true")
+    // console.log("in the if part, getState is true")
     console.log(routes.length)
     routes = routes.filter((item, index) => index < 4);
    }
     else if(getState==="false"){
-      console.log("HERE IN THE ELSE PART, getState is false")
+      // console.log("HERE IN THE ELSE PART, getState is false")
       const includedIndices = [0, 1, 4];
       routes = includedIndices.map((index) => routes[index]);
    }
+   
     return routes.map((prop, key) => {
       return (
         <NavItem key={key}>
@@ -199,17 +196,20 @@ const Sidebar = (props) => {
                 <span>Support</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem href="#pablo" onClick={handleLogout}>
+              {/* <DropdownItem href="#pablo" > */}
                 <i className="ni ni-user-run" />
-                <span>Logout</span>
+                <Link to="/auth/login">
+                  Logout
+                </Link>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
-        {/* Collapse */}
+        Collapse
         <Collapse navbar isOpen={collapseOpen}>
           {/* Collapse header */}
-          <div className="navbar-collapse-header d-md-none">
+          {/* <div className="navbar-collapse-header d-md-none">
             <Row>
               {logo ? (
                 <Col className="collapse-brand" xs="6">
@@ -235,9 +235,9 @@ const Sidebar = (props) => {
                 </button>
               </Col>
             </Row>
-          </div>
+          </div> */}
           {/* Form */}
-          <Form className="mt-4 mb-3 d-md-none">
+          {/* <Form className="mt-4 mb-3 d-md-none">
             <InputGroup className="input-group-rounded input-group-merge">
               <Input
                 aria-label="Search"
@@ -251,7 +251,7 @@ const Sidebar = (props) => {
                 </InputGroupText>
               </InputGroupAddon>
             </InputGroup>
-          </Form>
+          </Form> */}
           {/* Navigation */}
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}

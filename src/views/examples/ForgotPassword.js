@@ -1,8 +1,9 @@
 
-
 import React, { useState } from "react";
 import "./ForgotPassword.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import {
   Button,
   Card,
@@ -21,14 +22,29 @@ import "./Login.css"; // Import the CSS file
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send reset password email
     console.log("Email:", email);
     // Reset the email field
-    setEmail("");
-  };
+    // setEmail("");
+
+    const formData={
+      email
+    };
+
+    console.log(formData);
+    axios.post("http://localhost:8200/forget_password",formData)
+    .then(response=>{
+      console.log(response.data);
+      navigate('/reset-Password')
+      })
+    .catch(error => {
+      console.error(error)
+  });
+};
 
   return (
     <div className="forgot-password-container"> {/* Add a container */}
@@ -62,7 +78,7 @@ const ForgotPassword = () => {
               </FormGroup>
               <div className="text-center">
               <Link to="/reset-Password">
-                <Button className="my-4" color="primary" type="submit">
+                <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
                   Reset Password
                 </Button>
               </Link>

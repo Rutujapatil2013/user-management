@@ -54,7 +54,10 @@ const Login = () => {
         if(gotrole==="Admin"){
           console.log("Login Successful", true)
           // setError("Login Successful")
+          localStorage.setItem('adminEmail',email)
+          alert("Login Successful!")
           navigate("/admin/index", { state: "true" ,email:email });
+
         }
         else{
           // setRole(false)

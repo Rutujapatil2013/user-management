@@ -27,6 +27,8 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import ForgotPassword from "views/examples/ForgotPassword";
 import ResetPassword from "views/examples/ResetPassword";
+import Login from "views/examples/Login";
+import Sidebar from "components/Sidebar/Sidebar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

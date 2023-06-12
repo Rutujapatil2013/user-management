@@ -19,7 +19,8 @@ import Index from "views/Index.js";
 import Maps from "views/examples/Maps.js";
 import CompanyProfile from "views/examples/CompanyProfile";
 import UserProfile from "views/examples/UserProfile";
-import UserManagement from "views/examples/UserManagement"; 
+import UserManagement from "./views/examples/UserManagement"; 
+// import UserManagement from "views/examples/UserManagement"; 
 // import CompanyAllusers from "views/examples/CompanyAllUsers"
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";

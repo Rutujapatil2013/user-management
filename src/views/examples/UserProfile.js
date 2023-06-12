@@ -1,5 +1,7 @@
 import React from 'react';
+import {useState} from "react";
 import "./UserProfile.css";
+
 import {
   MDBCol,
   MDBContainer,
@@ -19,6 +21,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 export default function ProfilePage() {
+
   return (
   <div className="container">
     <section style={{ backgroundColor: 'rgb(129, 161, 190)' }}>
@@ -100,8 +103,3 @@ export default function ProfilePage() {
 
   );
 }
-
-
-
-
-

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 import {
   Button,
   Card,
-  CardBody,
+  CardBody, 
   FormGroup,
   Form,
   Input,
@@ -23,15 +25,35 @@ const ResetPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., reset the password
+    // Handle form submission, e.g., send reset password email
     console.log("Email:", email);
-    console.log("Code:", code);
-    console.log("New Password:", newPassword);
-    // Reset the form fields
-    setEmail("");
-    setCode("");
-    setNewPassword("");
-  };
+
+    const formData={
+      email,
+      code,
+      newPassword
+    };
+
+    console.log(formData);
+    axios.post("http://localhost:8200/reset-password/{email}/{code}/{newPassword}",formData)
+    .then(response=>{
+      console.log(response.data);
+      })
+    .catch(error => {
+      console.error(error)
+  });
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Handle form submission, e.g., reset the password
+  //   console.log("Email:", email);
+  //   console.log("Code:", code);
+  //   console.log("New Password:", newPassword);
+  //   // Reset the form fields
+  //   // setEmail("");
+  //   // setCode("");
+  //   // setNewPassword("");
+  // };
 
   return (
     <div className="reset-password-container">
@@ -96,7 +118,7 @@ const ResetPassword = () => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
+                <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
                   <FiCheckCircle className="reset-password-icon" /> Reset Password
                 </Button>
                 <Row className="mt-3">
@@ -114,6 +136,7 @@ const ResetPassword = () => {
       </Col>
     </div>
   );
+};
 };
 
 export default ResetPassword;
