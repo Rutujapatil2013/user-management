@@ -76,10 +76,12 @@ const Register = () => {
           setLastName("")
           setUserEmail("")
           setPassword("")
-          // navigate('/login')
+          alert(response.data)
+          navigate('/login')
         } 
         else{
-          setMessage(response.data)
+          alert(response.data)
+          // setMessage(response.data)
         }
         // Perform further actions if needed
       })

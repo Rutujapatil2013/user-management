@@ -76,7 +76,7 @@ const UserManagement = () => {
     axios.get(url).then(response=>{
       console.log("we got the users data as")
       const allUsersGot = response.data.users
-      
+      // console.log(allUsersGot)
       allUsersGot.forEach((item)=>{
         newUser.firstName = item.firstName
         newUser.lastName = item.lastName
@@ -92,7 +92,7 @@ const UserManagement = () => {
                     firstName: '',
                     lastName: '',
                     email: '',
-                    password: '',
+                    // password: '',
                     role: '',
                     id:''
                   });
@@ -126,8 +126,6 @@ const UserManagement = () => {
   };
 
   const updateUser = (gotUser) => {
-    
-
     console.log("Updating user...", gotUser);
     // console.log(user)
     // const url = "http://localhost:8200/users/getByEmail/"+email;
@@ -205,11 +203,13 @@ const UserManagement = () => {
     setEditingUser(null);
   };
 
+
   const deleteUser = (user) => {
     if (window.confirm('Do you really want to delete this user?')) {
       setUsers(users.filter((u) => u !== user));
     }
   };
+
 
   useEffect( () => {
 
@@ -224,6 +224,7 @@ const UserManagement = () => {
         console.error('Error fetching data:', error);
       });
   }, []);
+  
   const navigate = useNavigate();
   
   const handleSubmit= async(e)=>{
@@ -309,7 +310,7 @@ const UserManagement = () => {
                   newUser.firstName = firstName
                   newUser.lastName = lastName
                   newUser.email = email
-                  newUser.password = password
+                  // newUser.password = password
                   newUser.role = roleName
 
                   
@@ -323,7 +324,7 @@ const UserManagement = () => {
                     firstName: '',
                     lastName: '',
                     email: '',
-                    password: '',
+                    // password: '',
                     role: '',
                     id:''
                   });
@@ -352,8 +353,7 @@ const UserManagement = () => {
       
       console.log(formData)
     }
-    
-
+  
     
   // Make a POST request to the backend API
   // axios.post("http://localhost:8200/adduser/post", formData)
@@ -372,7 +372,7 @@ const UserManagement = () => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Password</th>
+            {/* <th>Password</th> */}
             <th>Role</th>
             <th>Actions</th>
           </tr>
@@ -384,7 +384,7 @@ const UserManagement = () => {
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
               <td>{user.email}</td>
-              <td>{user.password}</td>
+              {/* <td>{user.password}</td> */}
               <td>{user.role}</td>
               <td>
                 <button className="edit-button" onClick={() => editUser(user)}>
@@ -437,7 +437,7 @@ const UserManagement = () => {
                         })
                       }
                     />
-                    <input
+                    {/* <input
                       type="password"
                       name="password"
                       value={editingUser.password}
@@ -447,7 +447,7 @@ const UserManagement = () => {
                           password: e.target.value,
                         })
                       }
-                    />
+                    /> */}
                     <input
                       type="text"
                       name="role"
@@ -471,6 +471,7 @@ const UserManagement = () => {
           </tr>
         </tbody>
       </table>
+
       {showAddModal && (
         <div className="edit-modal">
           <div className="edit-modal-content">
