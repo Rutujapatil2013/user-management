@@ -83,11 +83,11 @@ const Sidebar = (props) => {
    if(getState==="true"){
     // console.log("in the if part, getState is true")
     console.log(routes.length)
-    routes = routes.filter((item, index) => index < 4);
+    routes = routes.filter((item, index) => index < 4 && index!=1 );
    }
     else if(getState==="false"){
       // console.log("HERE IN THE ELSE PART, getState is false")
-      const includedIndices = [0, 1, 4];
+      const includedIndices = [0];
       routes = includedIndices.map((index) => routes[index]);
    }
    
@@ -176,9 +176,9 @@ const Sidebar = (props) => {
               </Media>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
-              <DropdownItem className="noti-title" header tag="div">
+              {/* <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
@@ -206,7 +206,7 @@ const Sidebar = (props) => {
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
-        Collapse
+        {/* Collapse */}
         <Collapse navbar isOpen={collapseOpen}>
           {/* Collapse header */}
           {/* <div className="navbar-collapse-header d-md-none">

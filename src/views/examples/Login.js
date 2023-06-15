@@ -55,6 +55,8 @@ const Login = () => {
           console.log("Login Successful", true)
           // setError("Login Successful")
           localStorage.setItem('adminEmail',email)
+          localStorage.setItem('userEmail',email)
+          localStorage.setItem('defaultRole',"Admin")
           alert("Login Successful!")
           navigate("/admin/index", { state: "true" ,email:email });
 
@@ -63,6 +65,7 @@ const Login = () => {
           // setRole(false)
           console.log("Login Successful ", false)
           localStorage.setItem('userEmail',email)
+          localStorage.setItem('defaultRole',"User")
           alert("Login Successful!")
           navigate("/admin/index", { state: "false"  });
           // setError("Given user is not admin")
@@ -92,6 +95,7 @@ const Login = () => {
               <small></small>
             </div>
             <Form role="form" onSubmit={handleLogin}>
+            <h2 className="Login">Login</h2>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">

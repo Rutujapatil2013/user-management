@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -22,40 +23,49 @@ const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission, e.g., send reset password email
-    console.log("Email:", email);
-
-    const formData={
-      email,
-      code,
-      newPassword
-    };
-
-    console.log(formData);
-    axios.post("http://localhost:8200/reset-password/{email}/{code}/{newPassword}",formData)
-    .then(response=>{
-      console.log(response.data);
-      })
-    .catch(error => {
-      console.error(error)
-  });
+  
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   // Handle form submission, e.g., reset the password
+  //   // Handle form submission, e.g., send reset password email
   //   console.log("Email:", email);
-  //   console.log("Code:", code);
-  //   console.log("New Password:", newPassword);
-  //   // Reset the form fields
-  //   // setEmail("");
-  //   // setCode("");
-  //   // setNewPassword("");
-  // };
+
+  //   const formData={
+  //     email,
+  //     code,
+  //     newPassword
+  //   };
+
+  //   console.log(formData);
+  //   axios.post("http://localhost:8200/reset-password/{email}/{code}/{newPassword}",formData)
+  //   .then(response=>{
+  //     console.log(response.data);
+  //     })
+  //   .catch(error => {
+  //     console.error(error)
+  // });
+  // }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission, e.g., reset the password
+    console.log("Email:", email);
+    console.log("Code:", code);
+    console.log("New Password:", newPassword);
+    const url = "http://localhost:8200/reset-password?email="+email+"&code=" + code+ "&newPassword="+newPassword;
+    console.log(url)
+    axios.post(url).then(response=>{
+      console.log(response.data)
+      alert("Password reset successfully!")
+      navigate('/')
+    } ).catch(error=>{
+      console.error(error)
+    })
+  };
 
   return (
+    <>
     <div className="reset-password-container">
       <Col lg="5" md="5">
         <Card className="bg-secondary shadow border-0">
@@ -135,8 +145,8 @@ const ResetPassword = () => {
         </Card>
       </Col>
     </div>
+  </>
   );
-};
 };
 
 export default ResetPassword;

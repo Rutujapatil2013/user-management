@@ -42,7 +42,7 @@ const UserManagement = () => {
     role: '',
     id:''
   });
-  
+
 
   useEffect(()=>{
     const url = "http://localhost:8200/companies";
@@ -50,8 +50,6 @@ const UserManagement = () => {
       .then(response=>{
         const allCompanies = response.data;
         const tempEmail = localStorage.getItem('adminEmail')
-    
-
         var flag = false;
         allCompanies.forEach((item)=>{
           const userList = item.users
@@ -71,37 +69,29 @@ const UserManagement = () => {
     // axios.get(url)
   },[])
 
-  useEffect(()=>{
-    const url = "http://localhost:8200/companies/"+localStorage.getItem("companyId")
-    axios.get(url).then(response=>{
-      console.log("we got the users data as")
-      const allUsersGot = response.data.users
-      // console.log(allUsersGot)
-      allUsersGot.forEach((item)=>{
-        newUser.firstName = item.firstName
-        newUser.lastName = item.lastName
-        newUser.email = item.email
-        newUser.password = item.password
-        newUser.role = item.role.roleName
-        newUser.id = item.userId
-        
-        console.log("new user got", newUser)
-        setUsers([...users, newUser]); // Add the new user returned by the API to the local state
-                  
-                  setNewUser({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    // password: '',
-                    role: '',
-                    id:''
-                  });
-      })
 
-    }).catch(error=>{
-      console.error(error)
-    })
-  },[])
+  useEffect(() => {
+    const url = 'http://localhost:8200/companies/' + localStorage.getItem('companyId');
+    axios
+      .get(url)
+      .then((response) => {
+        console.log('we got the users data as');
+        const allUsersGot = response.data.users;
+        const updatedUsers = allUsersGot.map((item) => ({
+          firstName: item.firstName,
+          lastName: item.lastName,
+          email: item.email,
+          password: item.password,
+          role: item.role.roleName,
+          id: item.userId,
+        }));
+  
+        setUsers(updatedUsers);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   
   const handleInputChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
@@ -127,6 +117,7 @@ const UserManagement = () => {
 
   const updateUser = (gotUser) => {
     console.log("Updating user...", gotUser);
+
     // console.log(user)
     // const url = "http://localhost:8200/users/getByEmail/"+email;
 
@@ -189,7 +180,10 @@ const UserManagement = () => {
             "roleId":0,
             "roleName":user.role
           },
-          deleted
+          deleted,
+          "company":{
+            "companyId":user.companyId
+          }
         }
         console.log("updated data",updateData)
          const updateUrl = "http://localhost:8200/users/update/"+user.id
@@ -544,227 +538,230 @@ const UserManagement = () => {
 
 export default UserManagement;
 
+// ---------------------------------------------------------------------------------------------------
 
+// // import React, { useState } from 'react';
+// // import './UserManagement.css';
+// // import { FaEdit, FaTrash } from 'react-icons/fa';
+// // import { useLocation } from 'react-router-dom';
+// // import { Link, useNavigate } from 'react-router-dom';
+// // import axios from 'axios';
 
-// import React, { useState } from 'react';
-// import './UserManagement.css';
-// import { FaEdit, FaTrash } from 'react-icons/fa';
-// import { useLocation } from 'react-router-dom';
-// import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+// // const UserManagement = () => {
+// //   const [users, setUsers] = useState([]);
+// //   const [editingUser, setEditingUser] = useState(null);
+// //   const [showAddModal, setShowAddModal] = useState(false);
 
-// const UserManagement = () => {
-//   const [users, setUsers] = useState([]);
-//   const [editingUser, setEditingUser] = useState(null);
-//   const [showAddModal, setShowAddModal] = useState(false);
+// //   const [newUser, setNewUser] = useState({
+// //     firstName: '',
+// //     lastName: '',
+// //     email: '',
+// //     password: '',
+// //     role: '',
+// //   });
 
-//   const [newUser, setNewUser] = useState({
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     password: '',
-//     role: '',
-//   });
+// //   const location = useLocation();
+// //   const navigate = useNavigate();
 
-//   const location = useLocation();
-//   const navigate = useNavigate();
+// //   const handleInputChange = (e) => {
+// //     setNewUser({ ...newUser, [e.target.name]: e.target.value });
+// //   };
 
-//   const handleInputChange = (e) => {
-//     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-//   };
+// //   const addUser = () => {
+// //     // Make a POST request to the backend API
+// //     axios
+// //       .post("http://localhost:8200/adduser/post", newUser) // Replace with your backend API endpoint
+// //       .then((response) => {
+// //         console.log(response.data);
+// //         setUsers([...users, response.data]); // Add the new user returned by the API to the local state
+// //         setNewUser({
+// //           firstName: '',
+// //           lastName: '',
+// //           email: '',
+// //           password: '',
+// //           role: '',
+// //         });
+// //         setShowAddModal(false);
+// //       })
+// //       .catch((error) => {
+// //         console.error(error);
+// //         // Handle error scenarios
+// //       });
+// //   };
 
-//   const addUser = () => {
-//     // Make a POST request to the backend API
-//     axios
-//       .post("http://localhost:8200/adduser/post", newUser) // Replace with your backend API endpoint
-//       .then((response) => {
-//         console.log(response.data);
-//         setUsers([...users, response.data]); // Add the new user returned by the API to the local state
-//         setNewUser({
-//           firstName: '',
-//           lastName: '',
-//           email: '',
-//           password: '',
-//           role: '',
-//         });
-//         setShowAddModal(false);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//         // Handle error scenarios
-//       });
-//   };
+// //   const editUser = (user) => {
+// //     setEditingUser(user);
+// //   };
 
-//   const editUser = (user) => {
-//     setEditingUser(user);
-//   };
+// //   const updateUser = () => {
+// //     setUsers(
+// //       users.map((user) => (user === editingUser ? { ...editingUser } : user))
+// //     );
+// //     setEditingUser(null);
+// //   };
 
-//   const updateUser = () => {
-//     setUsers(
-//       users.map((user) => (user === editingUser ? { ...editingUser } : user))
-//     );
-//     setEditingUser(null);
-//   };
+// //   const deleteUser = (user) => {
+// //     if (window.confirm('Do you really want to delete this user?')) {
+// //       setUsers(users.filter((u) => u !== user));
+// //     }
+// //   };
 
-//   const deleteUser = (user) => {
-//     if (window.confirm('Do you really want to delete this user?')) {
-//       setUsers(users.filter((u) => u !== user));
-//     }
-//   };
+// //   return (
+// //     <div className="editable-table-container">
+// //       <h2>User Management Table</h2>
+// //       <table>
+// //         <thead>
+// //           <tr>
+// //             <th>First Name</th>
+// //             <th>Last Name</th>
+// //             <th>Email</th>
+// //             <th>Password</th>
+// //             <th>Role</th>
+// //             <th>Actions</th>
+// //           </tr>
+// //         </thead>
+// //         <tbody>
+// //           {users.map((user) => (
+// //             <tr key={user.email}>
+// //               <td>{user.firstName}</td>
+// //               <td>{user.lastName}</td>
+// //               <td>{user.email}</td>
+// //               <td>{user.password}</td>
+// //               <td>{user.role}</td>
+// //               <td>
+// //                 <button className="edit-button" onClick={() => editUser(user)}>
+// //                   <FaEdit />
+// //                 </button>
+// //                 <br />
+// //                 <br />
+// //                 <button className="delete-button" onClick={() => deleteUser(user)}>
+// //                   <FaTrash />
+// //                 </button>
+// //               </td>
+// //             </tr>
+// //           ))}
+// //           {editingUser && (
+// //             <tr>
+// //               <td colSpan="6">
+// //                 <div className="edit-modal">
+// //                   <div className="edit-modal-content">
+// //                     <h3>Edit User</h3>
+// //                     <input
+// //                       type="text"
+// //                       name="firstName"
+// //                       value={editingUser.firstName}
+// //                       onChange={(e) =>
+// //                         setEditingUser({
+// //                           ...editingUser,
+// //                           firstName: e.target.value,
+// //                         })
+// //                       }
+// //                     />
+// //                     <input
+// //                       type="text"
+// //                       name="lastName"
+// //                       value={editingUser.lastName}
+// //                       onChange={(e) =>
+// //                         setEditingUser({
+// //                           ...editingUser,
+// //                           lastName: e.target.value,
+// //                         })
+// //                       }
+// //                     />
+// //                     <input
+// //                       type="email"
+// //                       name="email"
+// //                       value={editingUser.email}
+// //                       onChange={(e) =>
+// //                         setEditingUser({
+// //                           ...editingUser,
+// //                           email: e.target.value,
+// //                         })
+// //                       }
+// //                     />
+// //                     <input
+// //                       type="password"
+// //                       name="password"
+// //                       value={editingUser.password}
+// //                       onChange={(e) =>
+// //                         setEditingUser({
+// //                           ...editingUser,
+// //                           password: e.target.value,
+// //                         })
+// //                       }
+// //                     />
+// //                     <input
+// //                       type="text"
+// //                       name="role"
+// //                       value={editingUser.role}
+// //                       onChange={(e) =>
+// //                         setEditingUser({ ...editingUser, role: e.target.value })
+// //                       }
+// //                     />
+// //                     <button onClick={updateUser}>Save</button>
+// //                   </div>
+// //                 </div>
+// //               </td>
+// //             </tr>
+// //           )}
+// //           <tr>
+// //             <td colSpan="6">
+// //               <button className="add-button" onClick={() => setShowAddModal(true)}>
+// //                 Add User
+// //               </button>
+// //             </td>
+// //           </tr>
+// //         </tbody>
+// //       </table>
+// //       {showAddModal && (
+// //         <div className="edit-modal">
+// //           <div className="edit-modal-content">
+// //             <h3>Add User</h3>
+// //             <input
+// //               type="text"
+// //               name="firstName"
+// //               placeholder="First Name"
+// //               value={newUser.firstName}
+// //               onChange={handleInputChange}
+// //             />
+// //             <input
+// //               type="text"
+// //               name="lastName"
+// //               placeholder="Last Name"
+// //               value={newUser.lastName}
+// //               onChange={handleInputChange}
+// //             />
+// //             <input
+// //               type="email"
+// //               name="email"
+// //               placeholder="Email"
+// //               value={newUser.email}
+// //               onChange={handleInputChange}
+// //             />
+// //             <input
+// //               type="password"
+// //               name="password"
+// //               placeholder="Password"
+// //               value={newUser.password}
+// //               onChange={handleInputChange}
+// //             />
+// //             <input
+// //               type="text"
+// //               name="role"
+// //               placeholder="Role"
+// //               value={newUser.role}
+// //               onChange={handleInputChange}
+// //             />
+// //             <button onClick={addUser}>Add</button>
+// //             <button onClick={() => setShowAddModal(false)}>Cancel</button>
+// //           </div>
+// //         </div>
+// //       )}
+// //     </div>
+// //   );
+// // };
 
-//   return (
-//     <div className="editable-table-container">
-//       <h2>User Management Table</h2>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>First Name</th>
-//             <th>Last Name</th>
-//             <th>Email</th>
-//             <th>Password</th>
-//             <th>Role</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {users.map((user) => (
-//             <tr key={user.email}>
-//               <td>{user.firstName}</td>
-//               <td>{user.lastName}</td>
-//               <td>{user.email}</td>
-//               <td>{user.password}</td>
-//               <td>{user.role}</td>
-//               <td>
-//                 <button className="edit-button" onClick={() => editUser(user)}>
-//                   <FaEdit />
-//                 </button>
-//                 <br />
-//                 <br />
-//                 <button className="delete-button" onClick={() => deleteUser(user)}>
-//                   <FaTrash />
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//           {editingUser && (
-//             <tr>
-//               <td colSpan="6">
-//                 <div className="edit-modal">
-//                   <div className="edit-modal-content">
-//                     <h3>Edit User</h3>
-//                     <input
-//                       type="text"
-//                       name="firstName"
-//                       value={editingUser.firstName}
-//                       onChange={(e) =>
-//                         setEditingUser({
-//                           ...editingUser,
-//                           firstName: e.target.value,
-//                         })
-//                       }
-//                     />
-//                     <input
-//                       type="text"
-//                       name="lastName"
-//                       value={editingUser.lastName}
-//                       onChange={(e) =>
-//                         setEditingUser({
-//                           ...editingUser,
-//                           lastName: e.target.value,
-//                         })
-//                       }
-//                     />
-//                     <input
-//                       type="email"
-//                       name="email"
-//                       value={editingUser.email}
-//                       onChange={(e) =>
-//                         setEditingUser({
-//                           ...editingUser,
-//                           email: e.target.value,
-//                         })
-//                       }
-//                     />
-//                     <input
-//                       type="password"
-//                       name="password"
-//                       value={editingUser.password}
-//                       onChange={(e) =>
-//                         setEditingUser({
-//                           ...editingUser,
-//                           password: e.target.value,
-//                         })
-//                       }
-//                     />
-//                     <input
-//                       type="text"
-//                       name="role"
-//                       value={editingUser.role}
-//                       onChange={(e) =>
-//                         setEditingUser({ ...editingUser, role: e.target.value })
-//                       }
-//                     />
-//                     <button onClick={updateUser}>Save</button>
-//                   </div>
-//                 </div>
-//               </td>
-//             </tr>
-//           )}
-//           <tr>
-//             <td colSpan="6">
-//               <button className="add-button" onClick={() => setShowAddModal(true)}>
-//                 Add User
-//               </button>
-//             </td>
-//           </tr>
-//         </tbody>
-//       </table>
-//       {showAddModal && (
-//         <div className="edit-modal">
-//           <div className="edit-modal-content">
-//             <h3>Add User</h3>
-//             <input
-//               type="text"
-//               name="firstName"
-//               placeholder="First Name"
-//               value={newUser.firstName}
-//               onChange={handleInputChange}
-//             />
-//             <input
-//               type="text"
-//               name="lastName"
-//               placeholder="Last Name"
-//               value={newUser.lastName}
-//               onChange={handleInputChange}
-//             />
-//             <input
-//               type="email"
-//               name="email"
-//               placeholder="Email"
-//               value={newUser.email}
-//               onChange={handleInputChange}
-//             />
-//             <input
-//               type="password"
-//               name="password"
-//               placeholder="Password"
-//               value={newUser.password}
-//               onChange={handleInputChange}
-//             />
-//             <input
-//               type="text"
-//               name="role"
-//               placeholder="Role"
-//               value={newUser.role}
-//               onChange={handleInputChange}
-//             />
-//             <button onClick={addUser}>Add</button>
-//             <button onClick={() => setShowAddModal(false)}>Cancel</button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
+// // export default UserManagement;
 
-// export default UserManagement;
+// ___________________________________________________________________________________________________________
+

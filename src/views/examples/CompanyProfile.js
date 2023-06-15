@@ -31,8 +31,9 @@ export default function CompanyProfile() {
           if (flag === false) {
             userList.forEach((usr) => {
               if (usr.email === tempEmail && flag === false) {
+                console.log(usr)
                 localStorage.setItem("companyId", item.companyId);
-                console.log(localStorage.getItem("companyId"));
+                console.log("the companyid we get is here",localStorage.getItem("companyId"));
               }
             });
           }

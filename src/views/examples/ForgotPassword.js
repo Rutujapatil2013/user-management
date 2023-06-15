@@ -38,8 +38,8 @@ const ForgotPassword = () => {
     console.log(formData);
     axios.post("http://localhost:8200/forget_password",formData)
     .then(response=>{
-      console.log(response.data);
       navigate('/reset-Password')
+      console.log("we got the response",response.data);
       })
     .catch(error => {
       console.error(error)
@@ -77,11 +77,9 @@ const ForgotPassword = () => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-              <Link to="/reset-Password">
                 <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
                   Reset Password
                 </Button>
-              </Link>
               </div>
             </Form>
             <Row className="mt-3">
