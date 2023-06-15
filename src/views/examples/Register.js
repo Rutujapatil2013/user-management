@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import { Link , useNavigate} from 'react-router-dom';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Button,
   Card,
@@ -76,16 +78,22 @@ const Register = () => {
           setLastName("")
           setUserEmail("")
           setPassword("")
-          alert(response.data)
-          navigate('/login')
+          // alert(response.data)
+          toast.success(response.data)
+          // navigate('/login')
         } 
         else{
-          alert(response.data)
+          // alert(response.data)
           // setMessage(response.data)
+          const message = response.data;
+          toast.error(message)
+
         }
         // Perform further actions if needed
       })
       .catch(error => {
+        // const message = error.response.data.message;
+        // toast.error("An error occurred");
         console.error(error); // Handle any errors that occur during the request
       });
   };
@@ -228,7 +236,7 @@ const Register = () => {
                     />
                   </InputGroup>
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
@@ -240,7 +248,7 @@ const Register = () => {
                            value={roleName}
                            onChange={(e) => setRoleName(e.target.value)} />
                   </InputGroup>
-                </FormGroup>
+                </FormGroup> */}
               </Col>
             </Row>
             <div className="text-center">
@@ -262,9 +270,10 @@ const Register = () => {
               Login
             </Link>
           </div>
-          <div style={{display:"flex",width:"90%",justifyContent:"center"}}>{message}</div>
+          {/* <div style={{display:"flex",width:"90%",justifyContent:"center"}}>{message}</div> */}
         </CardBody>
       </Card>
+      <ToastContainer />
     </div>
   );
 };

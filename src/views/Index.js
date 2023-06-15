@@ -47,10 +47,10 @@ const Index = (props) => {
   return (
     <>
       <Header />
-      {/* Page content */}
-      <Container className="mt--7" fluid>
+      <div className="main-container">
+      <Container className="mt--7" fluid  >
         <Row>
-          <Col className="mb-5 mb-xl-0" xl="8">
+          {/* <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="bg-gradient-default shadow">
               <CardHeader className="bg-transparent">
                 <Row className="align-items-center">
@@ -92,8 +92,7 @@ const Index = (props) => {
                 </Row>
               </CardHeader>
               <CardBody>
-                {/* Chart */}
-                <div className="chart">
+                 <div className="chart">
                   <Line
                     data={chartExample1[chartExample1Data]}
                     options={chartExample1.options}
@@ -102,7 +101,7 @@ const Index = (props) => {
                 </div>
               </CardBody>
             </Card>
-          </Col>
+          </Col> 
           <Col xl="4">
             <Card className="shadow">
               <CardHeader className="bg-transparent">
@@ -116,7 +115,7 @@ const Index = (props) => {
                 </Row>
               </CardHeader>
               <CardBody>
-                {/* Chart */}
+
                 <div className="chart">
                   <Bar
                     data={chartExample2.data}
@@ -125,10 +124,10 @@ const Index = (props) => {
                 </div>
               </CardBody>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="8">
+          {/* <Col className="mb-5 mb-xl-0" xl="8">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
@@ -203,8 +202,8 @@ const Index = (props) => {
                 </tbody>
               </Table>
             </Card>
-          </Col>
-          <Col xl="4">
+          </Col> */}
+          {/* <Col xl="4">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
@@ -311,9 +310,10 @@ const Index = (props) => {
                 </tbody>
               </Table>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
+      </div>
     </>
   );
 };

@@ -55,12 +55,12 @@ export default function UserProfile() {
 
 
   return (
-  <div className="container">
+  <div className="user_container">
     <section style={{ backgroundColor: 'rgb(129, 161, 190)' }}>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
-            <MDBCard className="mb-4">
+            <MDBCard className="mb-4 userProfileImage">
               <MDBCardBody className="text-center">
                 <MDBCardImage
                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
@@ -79,7 +79,7 @@ export default function UserProfile() {
           </MDBCol>
 
           <MDBCol lg="8">
-            <MDBCard className="mb-4">
+            <MDBCard className="mb-4 userInfo">
               <MDBCardBody>
                 <MDBRow>
                   <MDBCol sm="3">

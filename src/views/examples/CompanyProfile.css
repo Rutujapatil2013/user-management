@@ -1,19 +1,19 @@
-.container {
+.CompanyContainer {
   /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   min-height: 100vh; */
-  margin-top: 10px;
-  padding-top: 100px;
+  width:100%;
+  margin-left: 180px;
+  margin-top: 90px;
+  /* padding-top: 100px; */
   /* background-color: rgb(129, 161, 190); */
 }
 
-.company-container{
-  /* display: flex;
-  justify-content: center; */
+/* .company-container{
   align-items: center;
   background-color: black;
-}
+} */
   
   

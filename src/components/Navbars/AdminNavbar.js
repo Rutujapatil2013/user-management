@@ -30,6 +30,29 @@ const AdminNavbar = (props) => {
       setFirstName(response.data[0].firstName)
       setLastName(response.data[0].lastName)
       setDefaultRole(localStorage.getItem("defaultRole"))
+
+      
+        const newUrl = "http://localhost:8200/companies";
+        axios.get(newUrl)
+          .then(response=>{
+            const allCompanies = response.data;
+            const tempEmail = localStorage.getItem('adminEmail')
+            var flag = false;
+            allCompanies.forEach((item)=>{
+              const userList = item.users
+              if(flag===false){
+                userList.forEach((usr)=>{
+                  if(usr.email===tempEmail && flag===false){
+                    localStorage.setItem("companyId",item.companyId)
+                    console.log(localStorage.getItem("companyId"))
+                  }
+                })
+              }
+            })
+          }).catch(error=>{
+            console.error(error)
+          })
+    
     }).catch(error=>{
       console.error(error)
     })
@@ -71,7 +94,7 @@ const AdminNavbar = (props) => {
                     <span className="mb-0 text-sm font-weight-bold">
                      {firstName} {lastName}
                     </span>
-                    <p>{defaultRole}</p>
+                    {/* <p>{defaultRole}</p> */}
                   </Media>
                 </Media>
               </DropdownToggle>
@@ -99,7 +122,7 @@ const AdminNavbar = (props) => {
                 {/* <DropdownItem to="/auth/login" href="#pablo" onClick={(e) => e.preventDefault()}> */}
                 <DropdownItem to="/auth/login" href="#pablo" tag={Link}>
                   <i className="ni ni-user-run" />
-                  <span onClick={()=>{localStorage.clear();}}>Logout</span>
+                  <span onClick={()=>{console.clear();localStorage.clear();}}>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

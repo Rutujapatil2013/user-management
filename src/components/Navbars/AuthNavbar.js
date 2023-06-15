@@ -32,14 +32,14 @@ const AdminNavbar = () => {
           <UncontrolledCollapse navbar toggler="#navbar-collapse-main">
             <div className="navbar-collapse-header d-md-none">
               <Row>
-                <Col className="collapse-brand" xs="6">
+                {/* <Col className="collapse-brand" xs="6">
                   <Link to="/">
                     <img
                       alt="..."
                       src={require("../../assets/img/brand/argon-react.png")}
                     />
                   </Link>
-                </Col>
+                </Col> */}
                 <Col className="collapse-close" xs="6">
                   <button className="navbar-toggler" id="navbar-collapse-main">
                     <span />

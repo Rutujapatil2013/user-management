@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import './CompanyProfile.css'
 import {
   MDBCol,
   MDBContainer,
@@ -71,12 +72,12 @@ export default function CompanyProfile() {
   }, [email,password]);
 
   return (
-    <div className="container">
+    <div>
       <section style={{ backgroundColor: 'rgb(129, 161, 190)' }}>
         <MDBContainer className="py-5">
           <MDBRow>
             <MDBCol lg="8">
-              <MDBCard className="mb-4">
+              <MDBCard className="mb-4 CompanyContainer">
                 <MDBCardBody>
                   <MDBRow>
                     <MDBCol sm="3">
