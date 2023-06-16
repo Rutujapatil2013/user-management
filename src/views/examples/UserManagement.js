@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './UserManagement.css';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -6,12 +7,6 @@ import { Link , useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-//   console.log('submitting the form');
-//   // Rest of the code for handling form submission and axios POST request
-// };
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -24,15 +19,11 @@ const UserManagement = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [roleName, setRoleName] = useState("");
-  const [deleted, setDeleted] = useState(false);
+  const [deleted, setDeleted] = useState("false");
   const [roleId, setRoleId] = useState(0);
   const [id, setId] = useState(0);
-  // const [message, setMessage] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyId, setCompanyId] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [emailId, setEmailId] = useState("");
-  // const [address, setAddress] = useState("");
   const [options, setOptions] = useState([])
 
   
@@ -45,70 +36,38 @@ const UserManagement = () => {
     id:''
   });
 
-  // useEffect(()=>{
-
-  // },[])
-
-
-  // useEffect(()=>{
-  //   const url = "http://localhost:8200/companies";
-  //   axios.get(url)
-  //     .then(response=>{
-  //       const allCompanies = response.data;
-  //       const tempEmail = localStorage.getItem('adminEmail')
-  //       var flag = false;
-  //       allCompanies.forEach((item)=>{
-  //         const userList = item.users
-  //         if(flag===false){
-  //           userList.forEach((usr)=>{
-  //             if(usr.email===tempEmail && flag===false){
-  //               localStorage.setItem("companyId",item.companyId)
-  //               console.log(localStorage.getItem("companyId"))
-  //             }
-  //           })
-  //         }
-  //       })
-  //     }).catch(error=>{
-  //       console.error(error)
-  //     })
-  //   // const url = "http://localhost:8200/companies/"+"companyId"
-  //   // axios.get(url)
-  // },[])
-
-
-  useEffect(() => {
+    useEffect(() => {
     const fetchCompanyData = async () => {
-    const compId = localStorage.getItem('companyId')
-    if(compId!==null){
-      const url = 'http://localhost:8200/companies/' + compId;
-      axios
-        .get(url)
-        .then((response) => {
-          // console.log('we got the users data as');
-          const allUsersGot = response.data.users;
-          const updatedUsers = allUsersGot.map((item) => ({
-            firstName: item.firstName,
-            lastName: item.lastName,
-            email: item.email,
-            password: item.password,
-            role: item.role.roleName,
-            id: item.userId,
-          }));
+      const compId = localStorage.getItem('companyId');
+      if (compId !== null) {
+        const url = 'http://localhost:8200/companies/' + compId;
+        axios
+          .get(url)
+          .then((response) => {
+            const allUsersGot = response.data.users;
+            const updatedUsers = allUsersGot
+              .filter((item) => !item.deleted) // Filter out deleted users
+              .map((item) => ({
+                firstName: item.firstName,
+                lastName: item.lastName,
+                email: item.email,
+                password: item.password,
+                role: item.role.roleName,
+                id: item.userId,
+              }));
     
-          setUsers(updatedUsers);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }else{
-      // window.location.reload();
+            setUsers(updatedUsers);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        // window.location.reload();
+      }
     };
-  }
     fetchCompanyData();
-  }, [users]);
-
+    },[users]);
   
-
   const pressed = ()=>{
     console.log("button pressed")
   }
@@ -174,20 +133,20 @@ const UserManagement = () => {
 
 
   const deleteUser = (user) => {
-    // if (window.confirm('Do you really want to delete this user?')) {
-    //   setUsers(users.filter((u) => u !== user));
-    // }
-    console.log(user)
-    const url ="http://localhost:8200/users/delete/"+user.id;
-    axios.delete(url)
-    .then(response=>{
-      console.log("User deleted successfully")
-      toast.success("User deleted successfully")
-    })
-    .catch(error =>{
-      console.error("Error fetching data:",error);
-    });
+    const url = "http://localhost:8200/users/delete/" + user.id;
+    axios
+      .delete(url)
+      .then((response) => {
+        console.log("User deleted successfully");
+        toast.success("User deleted successfully");
+        // Remove the deleted user from the frontend list
+        setUsers(users.filter((u) => u.id !== user.id));
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+      });
   };
+  
 
 
   useEffect( () => {
@@ -525,4 +484,3 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
-
