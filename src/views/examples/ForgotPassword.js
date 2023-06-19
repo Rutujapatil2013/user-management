@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./ForgotPassword.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,23 +30,26 @@ const ForgotPassword = () => {
     // Reset the email field
     // setEmail("");
 
-    const formData={
-      email
+    const formData = {
+      email,
     };
 
     console.log(formData);
-    axios.post("http://localhost:8200/forget_password",formData)
-    .then(response=>{
-      navigate('/reset-Password')
-      console.log("we got the response",response.data);
+    axios
+      .post("http://localhost:8200/forget_password", formData)
+      .then((response) => {
+        navigate("/reset-Password");
+        console.log("we got the response", response.data);
       })
-    .catch(error => {
-      console.error(error)
-  });
-};
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
-    <div className="forgot-password-container"> {/* Add a container */}
+    <div className="forgot-password-container">
+      {" "}
+      {/* Add a container */}
       <Col lg="5" md="5">
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
@@ -56,7 +58,8 @@ const ForgotPassword = () => {
                 <FiLock size={64} /> Forgot Password
               </h4>
               <p className="forgot-password-message">
-                Enter your email we will send you instructions to reset your password.
+                Enter your email we will send you instructions to reset your
+                password.
               </p>
             </div>
             <Form role="form" onSubmit={handleSubmit}>
@@ -77,7 +80,12 @@ const ForgotPassword = () => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit" onClick={handleSubmit}>
+                <Button
+                  className="my-4"
+                  color="primary"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   Reset Password
                 </Button>
               </div>

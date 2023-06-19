@@ -1,11 +1,9 @@
-
-
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Card,
@@ -36,7 +34,10 @@ const Login = () => {
     console.log("login button pressed", creds);
 
     const url =
-      "http://localhost:8200/users/login?email=" + email + "&password=" + password;
+      "http://localhost:8200/users/login?email=" +
+      email +
+      "&password=" +
+      password;
     console.log(url);
     try {
       const response = await axios.post(url);
@@ -44,7 +45,7 @@ const Login = () => {
       if (user === "Password does not match" || user === "User not found") {
         console.log(user);
         // setErrorMessage("Invalid credentials"); // Set error message
-        toast.error(user)
+        toast.error(user);
       } else {
         const newUrl = "http://localhost:8200/users/getByEmail/" + email;
         console.log(newUrl);
@@ -66,7 +67,7 @@ const Login = () => {
               console.log("Login Successful ", false);
               localStorage.setItem("userEmail", email);
               localStorage.setItem("defaultRole", "User");
-              toast.success("Login Successful!")
+              toast.success("Login Successful!");
               navigate("/admin/index", { state: "false" });
             }
           })

@@ -1,18 +1,16 @@
-
-
-import React, { useState, useEffect } from 'react';
-import './UserManagement.css';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
-import { Link , useNavigate} from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import "./UserManagement.css";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [adminuserEmail, setAdminuserEmail] = useState("")
+  const [adminuserEmail, setAdminuserEmail] = useState("");
   const [editingUser, setEditingUser] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -26,23 +24,22 @@ const UserManagement = () => {
   const [id, setId] = useState(0);
   const [companyName, setCompanyName] = useState("");
   const [companyId, setCompanyId] = useState("");
-  const [options, setOptions] = useState([])
+  const [options, setOptions] = useState([]);
 
-  
   const [newUser, setNewUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    role: '',
-    id:''
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    role: "",
+    id: "",
   });
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchCompanyData = async () => {
-      const compId = localStorage.getItem('companyId');
+      const compId = localStorage.getItem("companyId");
       if (compId !== null) {
-        const url = 'http://localhost:8200/companies/' + compId;
+        const url = "http://localhost:8200/companies/" + compId;
         axios
           .get(url)
           .then((response) => {
@@ -57,7 +54,7 @@ const UserManagement = () => {
                 role: item.role.roleName,
                 id: item.userId,
               }));
-    
+
             setUsers(updatedUsers);
           })
           .catch((error) => {
@@ -68,12 +65,12 @@ const UserManagement = () => {
       }
     };
     fetchCompanyData();
-    },[users]);
-  
-  const pressed = ()=>{
-    console.log("button pressed")
-  }
-  
+  }, [users]);
+
+  const pressed = () => {
+    console.log("button pressed");
+  };
+
   const handleInputChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
@@ -81,56 +78,61 @@ const UserManagement = () => {
   const addUser = () => {
     setUsers([...users, newUser]);
     setNewUser({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      role: '',
-      id:''
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      role: "",
+      id: "",
     });
     setShowAddModal(false);
   };
 
   const editUser = (user) => {
-    console.log("this user is getting updated", user)
+    console.log("this user is getting updated", user);
     setEditingUser(user);
   };
 
-  const updateUserDetails = (e,gotUser) => {
+  const updateUserDetails = (e, gotUser) => {
     e.preventDefault();
     console.log("Updating user...", gotUser);
-    const url = "http://localhost:8200/users/getById/"+gotUser.id;
-    axios.get(url).then(response=>{
-      console.log("User data",response.data)
-      const updatingData = {
-          "userId":gotUser.id,
-          "firstName":gotUser.firstName,
-          "lastName":gotUser.lastName,
-          "email":gotUser.email,
-          "password":response.data.password,
-          "verificationEnabled":false,
-          "deleted":false,
-          "role":{
-            "roleId":0,
-            "roleName":gotUser.role
+    const url = "http://localhost:8200/users/getById/" + gotUser.id;
+    axios
+      .get(url)
+      .then((response) => {
+        console.log("User data", response.data);
+        const updatingData = {
+          userId: gotUser.id,
+          firstName: gotUser.firstName,
+          lastName: gotUser.lastName,
+          email: gotUser.email,
+          password: response.data.password,
+          verificationEnabled: false,
+          deleted: false,
+          role: {
+            roleId: 0,
+            roleName: gotUser.role,
           },
-          "company":{
-            "companyId":localStorage.getItem("companyId")
-          }
-        }
-        console.log("final data for update",updatingData)
-        const api = "http://localhost:8200/users/update/"+gotUser.id
-        axios.put(api,updatingData).then(response=>{
-          console.log("we got updated data as", response.data)
-          toast.success("User updated successfully")
-          setEditingUser(null);
-        }).catch(error=>{
-          console.error(error)
-        })
-    }).catch(error=>{
-      console.error(error)
-    })
-    
+          company: {
+            companyId: localStorage.getItem("companyId"),
+          },
+        };
+        console.log("final data for update", updatingData);
+        const api = "http://localhost:8200/users/update/" + gotUser.id;
+        axios
+          .put(api, updatingData)
+          .then((response) => {
+            console.log("we got updated data as", response.data);
+            toast.success("User updated successfully");
+            setEditingUser(null);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   // const deleteUser = (user) => {
@@ -151,7 +153,6 @@ const UserManagement = () => {
   //   }
   // };
 
-
   const deleteUser = (user) => {
     const handleDelete = () => {
       const url = "http://localhost:8200/users/delete/" + user.id;
@@ -168,12 +169,12 @@ const UserManagement = () => {
           console.error("Error deleting user:", error);
         });
     };
-  
+
     const handleCancel = () => {
       toast.dismiss(); // Dismiss the toast when canceling
       // Perform any additional actions if needed
     };
-  
+
     const confirmDelete = () => {
       toast.dismiss(); // Dismiss any existing toast
       toast.info(
@@ -197,160 +198,160 @@ const UserManagement = () => {
     confirmDelete();
   };
 
-  
-
-  useEffect( () => {
-
+  useEffect(() => {
     // Fetch data from the API
-     axios.get("http://localhost:8200/roles/getall")
-      .then(response => {
+    axios
+      .get("http://localhost:8200/roles/getall")
+      .then((response) => {
         // Update the options state with the data
         setOptions(response.data);
-        console.log(response.data)
+        console.log(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
-  
-  const navigate = useNavigate();
-  
-  const handleSubmit= async(e)=>{
-    e.preventDefault();
-    console.log("the state is here in the user management *****************************************")
-    const tempEmail = localStorage.getItem('adminEmail')
-    console.log("-----------------------------the local storage value of email is", tempEmail);
-      // setAdminuserEmail(temp)
-    console.log("Adding the user")
 
-  
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(
+      "the state is here in the user management *****************************************"
+    );
+    const tempEmail = localStorage.getItem("adminEmail");
+    console.log(
+      "-----------------------------the local storage value of email is",
+      tempEmail
+    );
+    // setAdminuserEmail(temp)
+    console.log("Adding the user");
+
     const formData = {
       firstName,
       lastName,
       email,
       password,
-      "verificaitonEnabled":false,
-      "role":{
-        "roleId":roleId,
-        "roleName":roleName
+      verificaitonEnabled: false,
+      role: {
+        roleId: roleId,
+        roleName: roleName,
       },
       deleted,
-      "company": {
-        "companyId": companyId,
-        "companyName": companyName,
-        "phoneNumber": "string",
-        "emailId": "string",
-        "address": "string",
-        "isDeleted": true,
-        "users": [
-          "string"
-        ],
-        "present": true,
-        "roleId": [
+      company: {
+        companyId: companyId,
+        companyName: companyName,
+        phoneNumber: "string",
+        emailId: "string",
+        address: "string",
+        isDeleted: true,
+        users: ["string"],
+        present: true,
+        roleId: [
           {
-            "roleId": 0,
-            "roleName": "string"
-          }
-        ]
+            roleId: 0,
+            roleName: "string",
+          },
+        ],
       },
-    }
-    axios.get("http://localhost:8200/roles/getall").then(response=>{
+    };
+    axios
+      .get("http://localhost:8200/roles/getall")
+      .then((response) => {
+        console.log(
+          "______________________________________________________________got the api call to get the data for the list of roles"
+        );
+        response.data.forEach((item) => {
+          // console.log(roleName)
 
-      console.log("______________________________________________________________got the api call to get the data for the list of roles")
-      response.data.forEach((item)=>{
-        // console.log(roleName)
-        
-        if(item.roleName===roleName){
-          // console.log(item.roleId, item.roleName)
-          formData['role']['roleId'] = item.roleId
+          if (item.roleName === roleName) {
+            // console.log(item.roleId, item.roleName)
+            formData["role"]["roleId"] = item.roleId;
 
-          setRoleId(item.roleId)
-          
-        }
+            setRoleId(item.roleId);
+          }
+        });
       })
-    }).catch(error=>{
-      console.error(error)
-    })
-    console.log("we are here")
-    
+      .catch((error) => {
+        console.error(error);
+      });
+    console.log("we are here");
+
     const url = "http://localhost:8200/companies";
-    await axios.get(url)
-      .then(response=>{
+    await axios
+      .get(url)
+      .then((response) => {
         const allCompanies = response.data;
         // company.user.email
         // console.log("got the response as -> ", allCompanies)
-        var flag=false;
+        var flag = false;
         allCompanies.forEach((item) => {
-          const userList = item.users
-          if(flag===false){
-            
-          userList.forEach((usr) =>{
-            // console.log(usr.email)
-            if(usr.email===tempEmail && flag===false){
-              console.log("email found")
-              formData['company']['companyId'] = item.companyId
-              // localStorage.setItem('companyId', item.companyId)
-              formData['company']['companyName'] = item.companyName
-              // formData['role']['roleId'] = roleId
-              console.log("final formdata",formData)
-              axios.post("http://localhost:8200/adduser/post", formData)
-                .then(response => {
-                  newUser.firstName = firstName
-                  newUser.lastName = lastName
-                  newUser.email = email
-                  // newUser.password = password
-                  newUser.role = roleName
+          const userList = item.users;
+          if (flag === false) {
+            userList.forEach((usr) => {
+              // console.log(usr.email)
+              if (usr.email === tempEmail && flag === false) {
+                console.log("email found");
+                formData["company"]["companyId"] = item.companyId;
+                // localStorage.setItem('companyId', item.companyId)
+                formData["company"]["companyName"] = item.companyName;
+                // formData['role']['roleId'] = roleId
+                console.log("final formdata", formData);
+                axios
+                  .post("http://localhost:8200/adduser/post", formData)
+                  .then((response) => {
+                    newUser.firstName = firstName;
+                    newUser.lastName = lastName;
+                    newUser.email = email;
+                    // newUser.password = password
+                    newUser.role = roleName;
 
-                  
+                    console.log("we got response", response.data);
+                    newUser.id = response.data.userId;
 
-                  console.log("we got response", response.data);
-                  newUser.id = response.data.userId
+                    setUsers([...users, newUser]); // Add the new user returned by the API to the local state
 
-                  setUsers([...users, newUser]); // Add the new user returned by the API to the local state
-                  
-                  setNewUser({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    // password: '',
-                    role: '',
-                    id:''
+                    setNewUser({
+                      firstName: "",
+                      lastName: "",
+                      email: "",
+                      // password: '',
+                      role: "",
+                      id: "",
+                    });
+                    setShowAddModal(false);
+                    // alert("User added successfully")
+                    toast.success("User added successfully");
+                    console.log("user added successfully");
+                    // Perform further actions if needed
+                  })
+                  .catch((error) => {
+                    console.log("failed to add user");
+                    console.error(error); // Handle any errors that occur during the request
                   });
-                  setShowAddModal(false);
-                  // alert("User added successfully")
-                  toast.success("User added successfully")
-                  console.log("user added successfully")
-                  // Perform further actions if needed
-                })
-                .catch(error => {
-                  console.log("failed to add user")
-                  console.error(error); // Handle any errors that occur during the request
-                });
-              setCompanyName(item.companyName)
-              setCompanyId(item.companyId)
-              console.log("email found", item)
-              flag = true;
-            }
-          })
-        }
+                setCompanyName(item.companyName);
+                setCompanyId(item.companyId);
+                console.log("email found", item);
+                flag = true;
+              }
+            });
+          }
           // console.log(" ")
         });
-      }).catch(error=>{
-        console.error(error);
       })
+      .catch((error) => {
+        console.error(error);
+      });
 
-      
-      console.log(formData)
-    }
-  
-    
+    console.log(formData);
+  };
+
   // Make a POST request to the backend API
   // axios.post("http://localhost:8200/adduser/post", formData)
   //   .then(response => {
   //     console.log(response.data)
   //   });
   // };
-
 
   return (
     <div className="editable-table-container">
@@ -367,7 +368,6 @@ const UserManagement = () => {
           </tr>
         </thead>
         <tbody>
-            
           {users.map((user) => (
             <tr key={user.email}>
               <td>{user.firstName}</td>
@@ -381,7 +381,10 @@ const UserManagement = () => {
                 </button>
                 <br />
                 <br />
-                <button className="delete-button" onClick={() => deleteUser(user)}>
+                <button
+                  className="delete-button"
+                  onClick={() => deleteUser(user)}
+                >
                   <FaTrash />
                 </button>
               </td>
@@ -446,7 +449,13 @@ const UserManagement = () => {
                       }
                     />
                     {/* <button onClick={pressed}>Save</button> */}
-                    <button onClick={(e)=>{updateUserDetails(e,editingUser)}}>Save</button>
+                    <button
+                      onClick={(e) => {
+                        updateUserDetails(e, editingUser);
+                      }}
+                    >
+                      Save
+                    </button>
                   </div>
                 </div>
               </td>
@@ -454,7 +463,10 @@ const UserManagement = () => {
           )}
           <tr>
             <td colSpan="6">
-              <button className="add-button" onClick={() => setShowAddModal(true)}>
+              <button
+                className="add-button"
+                onClick={() => setShowAddModal(true)}
+              >
                 Add User
               </button>
             </td>
@@ -481,9 +493,9 @@ const UserManagement = () => {
               placeholder="Last Name"
               // value={newUser.lastName}
               // onChange={handleInputChange}
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
             />
             <input
               type="email"
@@ -504,7 +516,7 @@ const UserManagement = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-          />
+            />
             {/* <input
               type="text"
               name="role"
@@ -516,14 +528,22 @@ const UserManagement = () => {
               required
             /> */}
             <div>
-          <select id="role" value={roleName} onChange={(e) => setRoleName(e.target.value)} required>
-          {options.map(option => (
-          <option key={option.id} value={option.id}>{option.roleName}</option>
-            
-        ))}
-          </select>
-        </div>
-            <button type="submit" onClick={handleSubmit} >Add</button>
+              <select
+                id="role"
+                value={roleName}
+                onChange={(e) => setRoleName(e.target.value)}
+                required
+              >
+                {options.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.roleName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" onClick={handleSubmit}>
+              Add
+            </button>
             <button onClick={() => setShowAddModal(false)}>Cancel</button>
           </div>
         </div>

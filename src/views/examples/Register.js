@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import { Link , useNavigate} from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Card,
@@ -15,11 +15,10 @@ import {
   InputGroup,
   Row,
   Col,
-} from 'reactstrap';
-import './Register.css'; // Import the custom CSS file for styling
+} from "reactstrap";
+import "./Register.css"; // Import the custom CSS file for styling
 
 const Register = () => {
-
   const [companyName, setCompanyName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [emailId, setEmailId] = useState("");
@@ -31,10 +30,10 @@ const Register = () => {
   const [roleName, setRoleName] = useState("Admin");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitting the form")
+    console.log("submitting the form");
     // if(companyName===""||phoneNumber===""||emailId===""||address===""||firstName===""||lastName===""||userEmail===""||password===""){
 
     // }
@@ -45,16 +44,16 @@ const Register = () => {
       phoneNumber,
       emailId,
       address,
-      isDeleted:false,
+      isDeleted: false,
       users: [
         {
           firstName,
           lastName,
           email: userEmail,
           password,
-          verificationEnabled:false,
+          verificationEnabled: false,
           role: {
-            roleId:1,
+            roleId: 1,
             roleName,
           },
         },
@@ -64,34 +63,32 @@ const Register = () => {
     // Handle form submission
     console.log(formData);
     // Make a POST request to the backend API
-    axios.post("http://localhost:8200/register", formData)
-      .then(response => {
+    axios
+      .post("http://localhost:8200/register", formData)
+      .then((response) => {
         console.log(response.data);
-        if(response.data==="Company Registered Successfully!"){
-
-          setMessage(response.data)
-          setCompanyName("")
-          setPhoneNumber("")
-          setEmailId("")
-          setAddress("")
-          setFirstName("")
-          setLastName("")
-          setUserEmail("")
-          setPassword("")
+        if (response.data === "Company Registered Successfully!") {
+          setMessage(response.data);
+          setCompanyName("");
+          setPhoneNumber("");
+          setEmailId("");
+          setAddress("");
+          setFirstName("");
+          setLastName("");
+          setUserEmail("");
+          setPassword("");
           // alert(response.data)
-          toast.success(response.data)
+          toast.success(response.data);
           // navigate('/login')
-        } 
-        else{
+        } else {
           // alert(response.data)
           // setMessage(response.data)
           const message = response.data;
-          toast.error(message)
-
+          toast.error(message);
         }
         // Perform further actions if needed
       })
-      .catch(error => {
+      .catch((error) => {
         // const message = error.response.data.message;
         // toast.error("An error occurred");
         console.error(error); // Handle any errors that occur during the request
@@ -115,43 +112,12 @@ const Register = () => {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Company Name" 
-                          type="text"
-                          value={companyName}
-                          onChange={(e) => setCompanyName(e.target.value)}
-                          required
-                           />
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-hat-3" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Phone Number" 
-                          type="text" 
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          required
-                           />
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-email-83" />
-                      </InputGroupText>
-                    </InputGroupAddon>
                     <Input
-                        placeholder="Company Email"
-                        type="email"
-                        autoComplete="new-email"
-                        value={emailId}
-                        onChange={(e) => setEmailId(e.target.value)}
-                        required
+                      placeholder="Company Name"
+                      type="text"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      required
                     />
                   </InputGroup>
                 </FormGroup>
@@ -162,12 +128,46 @@ const Register = () => {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Address" 
-                      type="text" 
+                    <Input
+                      placeholder="Phone Number"
+                      type="text"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      required
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-email-83" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      placeholder="Company Email"
+                      type="email"
+                      autoComplete="new-email"
+                      value={emailId}
+                      onChange={(e) => setEmailId(e.target.value)}
+                      required
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-hat-3" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      placeholder="Address"
+                      type="text"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       required
-                      />
+                    />
                   </InputGroup>
                 </FormGroup>
               </Col>
@@ -179,12 +179,13 @@ const Register = () => {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="First Name" 
-                           type="text" 
-                           value={firstName}
-                           onChange={(e) => setFirstName(e.target.value)}
-                           required
-                           />
+                    <Input
+                      placeholder="First Name"
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                    />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -194,12 +195,13 @@ const Register = () => {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Last Name" 
-                           type="text" 
-                           value={lastName}
-                           onChange={(e) => setLastName(e.target.value)}
-                           required
-                           />
+                    <Input
+                      placeholder="Last Name"
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                    />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -263,7 +265,7 @@ const Register = () => {
               <span className="text-success font-weight-700">strong</span>
             </small>
           </div> */}
-          
+
           <div className="text-center mt-3">
             <span>Already have an account?</span>
             <Link to="/auth/login" className="ml-2">
@@ -279,4 +281,3 @@ const Register = () => {
 };
 
 export default Register;
-
