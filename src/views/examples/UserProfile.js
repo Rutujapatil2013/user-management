@@ -32,20 +32,19 @@ export default function UserProfile() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const tempEmail = localStorage.getItem("userEmail");
       console.log("User data as: ");
       const url =
-        "http://localhost:8200/users/getByEmail/" +
-        localStorage.getItem("userEmail");
+        "http://localhost:8200/users/getLoggedInUserById/" +
+        localStorage.getItem("userId");
       try {
         const response = await axios.get(url);
-        const userData = response.data[0];
+        const userData = response.data;
         console.log(userData);
-        setFirstName(userData.firstName);
-        setLastName(userData.lastName);
-        setEmail(userData.email);
-        setPassword(userData.password);
-        setRoleName(userData.role.roleName);
+        setFirstName(userData.userDetails.firstName);
+        setLastName(userData.userDetails.lastName);
+        setEmail(userData.userDetails.email);
+        setPassword(userData.userDetails.password);
+        setRoleName(userData.userRole.roleName);
       } catch (error) {
         console.error(error);
       }

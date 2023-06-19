@@ -22,36 +22,43 @@ import {
 const AdminNavbar = (props) => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [myCompName, setMyCompName] = useState("")
   const [defaultRole, setDefaultRole] = useState("")
   useEffect(()=>{
-      const url = "http://localhost:8200/users/getByEmail/"+localStorage.getItem('userEmail')
+      const url = "http://localhost:8200/users/getLoggedInUserById/"+localStorage.getItem('userId')
     axios.get(url).then(response=>{
       console.log("we are fetching the data")
-      setFirstName(response.data[0].firstName)
-      setLastName(response.data[0].lastName)
-      setDefaultRole(localStorage.getItem("defaultRole"))
+      const data = response.data
+      console.log(data)
+      setFirstName(data.userDetails.firstName)
+      setLastName(data.userDetails.lastName)
+      localStorage.setItem("companyId",data.company.companyId)
+      localStorage.setItem("companyName",data.company.companyName)
+      localStorage.setItem("roleId",data.userRole.roleId)
+      setMyCompName(localStorage.getItem("companyName").toUpperCase())
+      // setDefaultRole(localStorage.getItem("defaultRole"))
 
       
-        const newUrl = "http://localhost:8200/companies";
-        axios.get(newUrl)
-          .then(response=>{
-            const allCompanies = response.data;
-            const tempEmail = localStorage.getItem('adminEmail')
-            var flag = false;
-            allCompanies.forEach((item)=>{
-              const userList = item.users
-              if(flag===false){
-                userList.forEach((usr)=>{
-                  if(usr.email===tempEmail && flag===false){
-                    localStorage.setItem("companyId",item.companyId)
-                    console.log(localStorage.getItem("companyId"))
-                  }
-                })
-              }
-            })
-          }).catch(error=>{
-            console.error(error)
-          })
+        // const newUrl = "http://localhost:8200/companies";
+        // axios.get(newUrl)
+        //   .then(response=>{
+        //     const allCompanies = response.data;
+        //     const tempEmail = localStorage.getItem('adminEmail')
+        //     var flag = false;
+        //     allCompanies.forEach((item)=>{
+        //       const userList = item.users
+        //       if(flag===false){
+        //         userList.forEach((usr)=>{
+        //           if(usr.email===tempEmail && flag===false){
+        //             localStorage.setItem("companyId",item.companyId)
+        //             console.log(localStorage.getItem("companyId"))
+        //           }
+        //         })
+        //       }
+        //     })
+        //   }).catch(error=>{
+        //     console.error(error)
+        //   })
     
     }).catch(error=>{
       console.error(error)
@@ -61,13 +68,13 @@ const AdminNavbar = (props) => {
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
-        <Container fluid>
-          <Link
+        <Container fluid style={{color:"white", fontSize:"1.5rem"}}>
+          {/* <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
-          >
-            {props.brandText}
-          </Link>
+          > */}
+            {myCompName}
+          {/* </Link> */}
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
               <InputGroup className="input-group-alternative">

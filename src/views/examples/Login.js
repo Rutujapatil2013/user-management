@@ -26,6 +26,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
+    localStorage.clear()
     e.preventDefault();
     const creds = {
       email,
@@ -55,6 +56,9 @@ const Login = () => {
             const newData = response.data;
             const newDatas = newData[0];
             const gotrole = newDatas.role.roleName;
+            const gotUserId = newDatas.userId
+            console.log("we got userID as: ", gotUserId)
+            localStorage.setItem("userId",gotUserId)
             if (gotrole === "Admin") {
               console.log("Login Successful", true);
               localStorage.setItem("adminEmail", email);

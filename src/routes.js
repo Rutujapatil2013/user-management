@@ -10,11 +10,11 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 // import Tables from "views/examples/Tables.js";
 // import Icons from "views/examples/Icons.js";
-
+// var compName = localStorage.getItem("companyName")
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
+    name: "dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
     layout: "/admin",

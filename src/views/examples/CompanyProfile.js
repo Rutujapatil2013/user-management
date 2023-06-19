@@ -18,45 +18,45 @@ export default function CompanyProfile() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:8200/companies";
-      try {
-        const response = await axios.get(url);
-        const allCompanies = response.data;
-        const tempEmail = localStorage.getItem("adminEmail");
-        let flag = false;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const url = "http://localhost:8200/companies";
+  //     try {
+  //       const response = await axios.get(url);
+  //       const allCompanies = response.data;
+  //       const tempEmail = localStorage.getItem("adminEmail");
+  //       let flag = false;
 
-        allCompanies.forEach((item) => {
-          const userList = item.users;
-          if (flag === false) {
-            userList.forEach((usr) => {
-              if (usr.email === tempEmail && flag === false) {
-                console.log(usr);
-                localStorage.setItem("companyId", item.companyId);
-                console.log(
-                  "the companyid we get is here",
-                  localStorage.getItem("companyId")
-                );
-              }
-            });
-          }
-        });
-        setEmail(tempEmail);
-        setPassword("");
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //       allCompanies.forEach((item) => {
+  //         const userList = item.users;
+  //         if (flag === false) {
+  //           userList.forEach((usr) => {
+  //             if (usr.email === tempEmail && flag === false) {
+  //               console.log(usr);
+  //               localStorage.setItem("companyId", item.companyId);
+  //               console.log(
+  //                 "the companyid we get is here",
+  //                 localStorage.getItem("companyId")
+  //               );
+  //             }
+  //           });
+  //         }
+  //       });
+  //       setEmail(tempEmail);
+  //       setPassword("");
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const fetchCompanyData = async () => {
       const companyId = localStorage.getItem("companyId");
       const url =
-        "http://localhost:8200/companies/" + localStorage.getItem("companyId");
+        "http://localhost:8200/companies/" + companyId;
       try {
         const response = await axios.get(url);
         // const companyData = response.data.company;

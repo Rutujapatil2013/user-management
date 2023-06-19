@@ -66,6 +66,7 @@ const UserManagement = () => {
     };
     fetchCompanyData();
   }, [users]);
+  // }, [users]);
 
   const pressed = () => {
     console.log("button pressed");
@@ -219,11 +220,11 @@ const UserManagement = () => {
     console.log(
       "the state is here in the user management *****************************************"
     );
-    const tempEmail = localStorage.getItem("adminEmail");
-    console.log(
-      "-----------------------------the local storage value of email is",
-      tempEmail
-    );
+    // const tempEmail = localStorage.getItem("adminEmail");
+    // console.log(
+    //   "-----------------------------the local storage value of email is",
+    //   tempEmail
+    // );
     // setAdminuserEmail(temp)
     console.log("Adding the user");
 
@@ -255,48 +256,58 @@ const UserManagement = () => {
         ],
       },
     };
-    axios
-      .get("http://localhost:8200/roles/getall")
-      .then((response) => {
-        console.log(
-          "______________________________________________________________got the api call to get the data for the list of roles"
-        );
-        response.data.forEach((item) => {
-          // console.log(roleName)
+    
+    formData["role"]["roleId"] = localStorage.getItem("roleId");
+    setRoleId(localStorage.getItem("roleId"));
+    var compId = localStorage.getItem("companyId");
+    var compName = localStorage.getItem("companyName")
+    // axios
+    //   .get("http://localhost:8200/roles/getall")
+    //   .then((response) => {
+    //     console.log(
+    //       "______________________________________________________________got the api call to get the data for the list of roles"
+    //     );
+    //     response.data.forEach((item) => {
+    //       // console.log(roleName)
 
-          if (item.roleName === roleName) {
-            // console.log(item.roleId, item.roleName)
-            formData["role"]["roleId"] = item.roleId;
+    //       if (item.roleName === roleName) {
+    //         // console.log(item.roleId, item.roleName)
+    //         formData["role"]["roleId"] = item.roleId;
 
-            setRoleId(item.roleId);
-          }
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    //         setRoleId(item.roleId);
+    //       }
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
     console.log("we are here");
-
-    const url = "http://localhost:8200/companies";
-    await axios
-      .get(url)
-      .then((response) => {
-        const allCompanies = response.data;
-        // company.user.email
-        // console.log("got the response as -> ", allCompanies)
-        var flag = false;
-        allCompanies.forEach((item) => {
-          const userList = item.users;
-          if (flag === false) {
-            userList.forEach((usr) => {
-              // console.log(usr.email)
-              if (usr.email === tempEmail && flag === false) {
-                console.log("email found");
-                formData["company"]["companyId"] = item.companyId;
+    formData["company"]["companyId"] = compId;
                 // localStorage.setItem('companyId', item.companyId)
-                formData["company"]["companyName"] = item.companyName;
-                // formData['role']['roleId'] = roleId
-                console.log("final formdata", formData);
+    formData["company"]["companyName"] = compName;
+
+    // const url = "http://localhost:8200/companies";
+
+    // await axios
+    //   .get(url)
+    //   .then((response) => {
+    //     const allCompanies = response.data;
+    //     // company.user.email
+    //     // console.log("got the response as -> ", allCompanies)
+    //     var flag = false;
+    //     allCompanies.forEach((item) => {
+    //       const userList = item.users;
+    //       if (flag === false) {
+    //         userList.forEach((usr) => {
+    //           // console.log(usr.email)
+    //           if (usr.email === tempEmail && flag === false) {
+    //             console.log("email found");
+    //             formData["company"]["companyId"] = item.companyId;
+    //             // localStorage.setItem('companyId', item.companyId)
+    //             formData["company"]["companyName"] = item.companyName;
+    //             // formData['role']['roleId'] = roleId
+    //             console.log("final formdata", formData);
+    
                 axios
                   .post("http://localhost:8200/adduser/post", formData)
                   .then((response) => {
@@ -329,19 +340,19 @@ const UserManagement = () => {
                     console.log("failed to add user");
                     console.error(error); // Handle any errors that occur during the request
                   });
-                setCompanyName(item.companyName);
-                setCompanyId(item.companyId);
-                console.log("email found", item);
-                flag = true;
-              }
-            });
-          }
-          // console.log(" ")
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+                setCompanyName(compName);
+                setCompanyId(compId);
+                // console.log("email found", item);
+                // flag = true;
+      //         }
+      //       });
+      //     }
+      //     // console.log(" ")
+      //   });
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      // });
 
     console.log(formData);
   };
