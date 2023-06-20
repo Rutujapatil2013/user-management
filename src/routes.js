@@ -14,7 +14,7 @@ import Login from "views/examples/Login.js";
 var routes = [
   {
     path: "/index",
-    name: "dashboard",
+    name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
     layout: "/admin",
